@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">DSH Model Presets</title>
+  <desc id="desc">Three compact model preset controls with a spark mark.</desc>
+  <defs>
+    <linearGradient id="bg" x1="28" y1="18" x2="226" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6F7CFF"/>
+      <stop offset="1" stop-color="#4254D8"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="58" fill="url(#bg)"/>
+  <rect x="42" y="52" width="172" height="42" rx="21" fill="#fff" fill-opacity=".96"/>
+  <rect x="42" y="107" width="128" height="42" rx="21" fill="#fff" fill-opacity=".78"/>
+  <rect x="42" y="162" width="150" height="42" rx="21" fill="#fff" fill-opacity=".58"/>
+  <circle cx="68" cy="73" r="8" fill="#5262E8"/>
+  <circle cx="68" cy="128" r="8" fill="#5262E8"/>
+  <circle cx="68" cy="183" r="8" fill="#5262E8"/>
+  <path d="M194 112l5.5 14.5L214 132l-14.5 5.5L194 152l-5.5-14.5L174 132l14.5-5.5L194 112z" fill="#FFF2A8"/>
+</svg>
