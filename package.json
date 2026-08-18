@@ -1,6 +1,6 @@
 {
   "name": "dsh-model-presets",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Save and switch model and reasoning-effort presets in the DeepSeek Harness composer.",
   "type": "module",
   "repository": {
@@ -23,7 +23,7 @@
     "assets",
     "cordis.patch.yml",
     "README.md",
-    "README.en.md",
+    "README.zh-CN.md",
     "LICENSE"
   ],
   "scripts": {
