@@ -1,0 +1,56 @@
+{
+  "name": "dsh-model-presets",
+  "version": "0.1.0",
+  "description": "Compact persistent model and reasoning-effort presets inside the DeepSeek Harness composer model selector.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zding89/dsh-model-presets.git"
+  },
+  "homepage": "https://github.com/Zding89/dsh-model-presets",
+  "bugs": {
+    "url": "https://github.com/Zding89/dsh-model-presets/issues"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "assets",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/client.js && node --test",
+    "test": "node --test"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-model-selection",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "model-presets",
+    "reasoning-effort"
+  ],
+  "engines": {
+    "node": ">=22.19"
+  },
+  "license": "MIT"
+}
