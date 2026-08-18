@@ -1,0 +1,5 @@
+node_modules/
+.npm-cache/
+.dsh-test/
+.DS_Store
+*.tgz
