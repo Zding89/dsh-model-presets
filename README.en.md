@@ -4,7 +4,7 @@ English | [中文](README.md)
 
 ![DSH Model Presets interface preview](assets/preview.png)
 
-A permanently installed DeepSeek Harness web plugin that pins frequently used **model + reasoning effort** combinations to the top of the composer model menu.
+Save frequently used **model + reasoning effort** combinations in the DeepSeek Harness model menu and switch them with one click.
 
 ## Features
 
@@ -12,7 +12,10 @@ A permanently installed DeepSeek Harness web plugin that pins frequently used **
 - Switches presets from the top of the model list with one click.
 - Adds, renames, reorders, and deletes presets.
 - Searches available models.
+- Switches the first nine presets with `Alt/Option + 1–9`; shortcuts stay inactive while typing.
 - Keeps presets after Harness restarts with browser-local persistence.
+
+Each preset records the API provider, model, and reasoning effort used when it was saved. The same model on two providers remains two separate combinations. If a provider or model becomes unavailable, its preset dims and stops responding; it returns to normal when the provider or model comes back.
 
 ## Install
 
@@ -20,9 +23,7 @@ A permanently installed DeepSeek Harness web plugin that pins frequently used **
 dsh plugin --profile web add https://github.com/Zding89/dsh-model-presets
 ```
 
-Restart DSH Web after installation. This is a normal profile bundle and does not create a dynamic Cordis plugin run record.
-
-The repository carries the GitHub `dsh-plugin` topic and will be submitted to the curated `awesome-dsh-plugin` registry. Once listed, search for **DSH Model Presets** in DSH's **Plugin Market**.
+Restart DSH Web after installation. Once listed, it will also be available from DSH's **Plugin Market**.
 
 ## Use
 
@@ -32,13 +33,11 @@ The repository carries the GitHub `dsh-plugin` topic and will be submitted to th
 4. Select a preset name to switch immediately.
 5. Select `⋯` to rename, reorder, or delete presets.
 
-On first use, the current selection becomes the initial preset. Deleting every preset does not seed it again.
+On first use, the current combination is saved as the first preset. If you delete every preset, it will not be added again.
 
 ## Data and privacy
 
-Presets stay in the current browser's `localStorage` under `dsh-model-presets:v1`. The plugin sends no telemetry and makes no external network requests.
-
-Presets do not sync across browser profiles, devices, or origins. The plugin reads and stores at most 50 presets.
+Presets stay in the current browser and are never uploaded. They do not sync across browsers, devices, or addresses. Up to 50 presets are stored.
 
 ## Compatibility
 
@@ -48,7 +47,7 @@ Presets do not sync across browser profiles, devices, or origins. The plugin rea
 
 ## Development
 
-The repository commits the prebuilt browser bundle, so GitHub installation runs no build script.
+The browser bundle is included in the repository, so installation needs no local build.
 
 ```sh
 npm run check

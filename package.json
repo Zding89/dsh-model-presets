@@ -1,7 +1,7 @@
 {
   "name": "dsh-model-presets",
-  "version": "0.1.0",
-  "description": "Compact persistent model and reasoning-effort presets inside the DeepSeek Harness composer model selector.",
+  "version": "0.2.0",
+  "description": "Save and switch model and reasoning-effort presets in the DeepSeek Harness composer.",
   "type": "module",
   "repository": {
     "type": "git",
