@@ -2,19 +2,16 @@
 
 English | [中文](README.md)
 
-![DSH Model Presets interface preview](assets/preview.svg)
+![DSH Model Presets interface preview](assets/preview.png)
 
 A permanently installed DeepSeek Harness web plugin that pins frequently used **model + reasoning effort** combinations to the top of the composer model menu.
 
 ## Features
 
-- Reuses the native composer model-selector location without adding a sidebar button.
-- Pins provider, model, and reasoning-effort presets above the model list.
-- Adds, renames, reorders, deletes, and applies presets.
-- Searches the available model catalog.
-- Animates reasoning choices into a wrapped multi-row layout with no horizontal scrolling.
-- Uses a restrained scale/fade menu on desktop and a bottom sheet on mobile.
-- Follows DSH theme tokens and reduced-motion preferences.
+- Saves frequently used model and reasoning-effort combinations.
+- Switches presets from the top of the model list with one click.
+- Adds, renames, reorders, and deletes presets.
+- Searches available models.
 - Keeps presets after Harness restarts with browser-local persistence.
 
 ## Install

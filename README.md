@@ -2,19 +2,16 @@
 
 [English](README.en.md) | 中文
 
-![DSH Model Presets 界面预览](assets/preview.svg)
+![DSH Model Presets 界面预览](assets/preview.png)
 
 一个永久安装的 DeepSeek Harness Web 插件，把常用的 **模型 + 推理等级** 组合固定在编辑器模型菜单顶部。
 
 ## 功能
 
-- 在原生模型选择器位置提供紧凑入口，不增加侧边栏按钮。
-- 预设固定在模型列表顶部，可一键切换 provider、model 和 reasoning effort。
+- 保存常用的模型与推理等级组合。
+- 在模型列表顶部一键切换预设。
 - 支持添加、重命名、排序和删除预设。
-- 支持模型搜索。
-- 推理等级带展开动画，并自动换成多行，不横向滚动。
-- 桌面端使用轻量缩放/淡入菜单；移动端使用底部弹层。
-- 遵循 DSH 主题 token，支持深色/浅色主题和减少动态效果设置。
+- 支持搜索模型。
 - 预设保存在浏览器本地，重启 Harness 后仍然存在。
 
 ## 安装
