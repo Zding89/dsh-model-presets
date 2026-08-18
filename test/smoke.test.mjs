@@ -53,6 +53,99 @@ test('client bundle exports the complete permanent plugin dependencies', async (
   assert.equal(typeof plugin.apply, 'function')
 })
 
+test('shortcut captures before UI handlers without opening a closed menu', async () => {
+  const { definition } = await loadBundle()
+  localStorage.setItem('dsh-model-presets:v1', JSON.stringify({
+    version: 1,
+    initialized: true,
+    presets: [{ id: 'one', name: 'First', selection: { provider: 'provider', model: 'model' } }],
+  }))
+
+  const catalog = {
+    status: 'ready',
+    error: null,
+    routable: true,
+    failures: [],
+    current: { provider: 'provider', model: 'model' },
+    groups: [{ id: 'provider', name: 'Provider', models: [{ id: 'model', name: 'Model' }] }],
+  }
+  const states = ['closed', catalog, '', false, false, null, null, null, '', null]
+  const stateWrites = []
+  const effects = []
+  let stateIndex = 0
+  const React = {
+    createElement(type, props, ...children) { return { type, props: props || {}, children } },
+    useEffect(effect) { effects.push(effect) },
+    useId() { return 'shortcut-dialog' },
+    useRef(value) { return { current: value } },
+    useState(value) {
+      const index = stateIndex++
+      return [index < states.length ? states[index] : value, () => { stateWrites.push(index) }]
+    },
+    useSyncExternalStore(_subscribe, snapshot) { return snapshot() },
+  }
+
+  const added = []
+  const removed = []
+  globalThis.window = {
+    addEventListener(name, listener, capture) { added.push({ name, listener, capture }) },
+    removeEventListener(name, listener, capture) { removed.push({ name, listener, capture }) },
+  }
+  globalThis.document = {
+    createElement() { return { dataset: {}, textContent: '', remove() {} } },
+    head: { appendChild() {} },
+  }
+
+  const plugin = definition.factory(() => React)
+  let seat
+  let selectCount = 0
+  const directories = {
+    directoryFor() {
+      return { select() { selectCount += 1; return Promise.resolve() } }
+    },
+  }
+  plugin.apply({
+    modelDirectories: directories,
+    sessions: { subagentAddress() { return undefined } },
+    locale: { register() { return () => {} } },
+    effect(install) { install() },
+    slots: {
+      inject(_name, install) { install(); return () => {} },
+      register(_options, component) { seat = component; return () => {} },
+    },
+  })
+
+  const t = (key) => key
+  const outer = seat({ available: true, directories, sessionId: 'session', locked: false, t })
+  outer.type(outer.props)
+  const disposeShortcut = effects[2]()
+  const capture = added.find((entry) => entry.name === 'keydown')
+  assert.equal(capture.capture, true)
+
+  let prevented = false
+  let stopped = false
+  capture.listener({
+    altKey: true,
+    ctrlKey: false,
+    metaKey: false,
+    shiftKey: false,
+    repeat: false,
+    code: 'Digit1',
+    target: { matches() { return false } },
+    preventDefault() { prevented = true },
+    stopPropagation() { stopped = true },
+  })
+  await Promise.resolve()
+  await Promise.resolve()
+
+  assert.equal(prevented, true)
+  assert.equal(stopped, true)
+  assert.equal(selectCount, 1)
+  assert.equal(stateWrites.includes(0), false)
+  disposeShortcut()
+  assert.equal(removed.some((entry) => entry.name === 'keydown' && entry.capture === true), true)
+})
+
 test('apply localizes, shadows one model seat, guards subagents, and disposes effects', async () => {
   const { definition, listeners } = await loadBundle()
   const plugin = definition.factory(() => ReactStub())
@@ -111,13 +204,13 @@ test('apply localizes, shadows one model seat, guards subagents, and disposes ef
   assert.equal(localeRegistration.namespace, 'modelPresets')
   assert.equal(localeRegistration.dictionaries.zh['search.placeholder'], '搜索模型')
   assert.equal(localeRegistration.dictionaries.en['search.placeholder'], 'Search models')
-  assert.match(localeRegistration.dictionaries.zh['shortcut.hint'], /快捷键/)
+  assert.equal(localeRegistration.dictionaries.zh['shortcut.hint'], '⌨ {shortcut}')
   assert.equal(style.dataset.plugin, 'dsh-model-presets')
   assert.match(style.textContent, /\.dmp-preset-row\{[^}]*grid-template-columns:minmax\(0,1fr\) auto/)
   assert.match(style.textContent, /\.dmp-preset-list\{[^}]*flex-wrap:wrap[^}]*overflow-x:hidden[^}]*overflow-y:auto/)
   assert.match(style.textContent, /\.dmp-trigger-model\{[^}]*white-space:normal[^}]*overflow-wrap:anywhere/)
   assert.match(style.textContent, /\.dmp-chip-name\{[^}]*overflow-wrap:anywhere/)
-  assert.match(style.textContent, /\.dmp-chip kbd/)
+  assert.doesNotMatch(style.textContent, /\.dmp-chip kbd/)
   assert.match(style.textContent, /\.dmp-shortcut-hint/)
   assert.match(style.textContent, /@media\(max-width:680px\)[^{]*\{[^}]*\.dmp-trigger\{max-width:65vw\}/)
   assert.equal(listeners.has('storage'), true)
