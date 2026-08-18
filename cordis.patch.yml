@@ -1,0 +1,5 @@
+# Mount the package as a normal Loader row. The client module registry discovers
+# its dsh.client declaration and serves the prebuilt browser bundle.
+- insert:
+    - id: model-presets
+      name: 'dsh-model-presets'
